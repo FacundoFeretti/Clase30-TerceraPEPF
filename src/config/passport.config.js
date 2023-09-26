@@ -3,6 +3,7 @@ import local from 'passport-local';
 import userModel from '../daos/mongodb/models/user.model.js';
 import { createHash, isValidPassword } from '../utils.js';
 import { create } from 'express-handlebars';
+import config from '../config.js';
 
 const LocalStrategy = local.Strategy;
 export const initializePassportLocal = () =>{
@@ -46,11 +47,19 @@ export const initializePassportLocal = () =>{
                     return done (null, false);
                 }
                 if(!isValidPassword(password, user)) return done(null,false);
-                
-                const userWithRole = {
-                    ...user.toObject(),
-                    role: user.role 
-                };
+                let userWithRole;
+                if(user.email === config.ADMIN_NAME && isValidPassword(config.ADMIN_PASSWORD, user)){
+                    userWithRole = {
+                        ...user.toObject(),
+                        role: 'admin'
+                    };
+                    console.log('el if funciono y se configuraron las variables de role')
+                } else {
+                    userWithRole = {
+                        ...user.toObject(),
+                        role: user.role 
+                    };
+                }
 
                 return done(null, userWithRole);
             }catch(error){
