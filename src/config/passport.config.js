@@ -3,6 +3,7 @@ import local from 'passport-local';
 import userModel from '../daos/mongodb/models/user.model.js';
 import { createHash, isValidPassword } from '../utils.js';
 import { create } from 'express-handlebars';
+import { addCartController } from '../controllers/cartController.js';
 import config from '../config.js';
 
 const LocalStrategy = local.Strategy;
@@ -16,12 +17,14 @@ export const initializePassportLocal = () =>{
                     console.log('User already exists');
                     return done(null, false);
                 }
+                const newCart = await addCartController()
                 const newUser = {
                     first_name,
                     last_name,
                     email,
                     age,
-                    password: createHash(password)
+                    password: createHash(password),
+                    cart: newCart._id
                 }
                 let result = await userModel.create(newUser);
                 return done(null,result);

@@ -15,7 +15,8 @@ export const getCartsService = async () => {
 };
 
 export const addCartService = async () => {
-    await cartManager.addCart();
+   const result = await cartManager.addCart();
+   return result;
 };
 
 export const addProductToCartService = async (cid, pid) => {
