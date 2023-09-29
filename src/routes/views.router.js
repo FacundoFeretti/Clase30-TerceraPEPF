@@ -1,5 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
+import { passportCall, authorization } from "../utils.js";
 import {getProductsForViewsController} from '../controllers/viewsController.js'
 import { getCartByIdViewsController } from "../controllers/viewsController.js";
 
@@ -28,4 +29,7 @@ router.get('/carts/:cid', async (req, res) => {
     res.render('oneCart', cart);
 });
 
+router.get('/addproduct',passportCall('jwt'),authorization('admin'), async (req,res) => {
+    res.render('postproducts')
+})
 export default router

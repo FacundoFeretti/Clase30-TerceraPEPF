@@ -1,7 +1,7 @@
 import {Router} from "express";
 import passport from "passport";
 import { authorization, passportCall } from "../utils.js";
-import { loginUserController } from "../controllers/userController.js";
+import { loginUserController, getCurrentUser } from "../controllers/userController.js";
 import config from '../config.js'
 
 const router = Router();
@@ -28,9 +28,7 @@ router.get("/logout", (req, res) => {
 
 router.get('/current',
   passportCall('jwt'),
-  async (req, res)=> {
-    res.send(req.user)
-  }
+  getCurrentUser
 );
 
 router.get('/github', passport.authenticate('github', {scope: "user:email"}), async(req,res)=>{})

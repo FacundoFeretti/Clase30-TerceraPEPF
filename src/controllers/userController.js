@@ -2,6 +2,7 @@ import { loginUserService } from "../services/usersService.js";
 import jwt from 'jsonwebtoken';
 import passport from "passport";
 import config from '../config.js'
+import { DTOCurrentUser } from "./DTO/user.dto.js";
 
 export const loginUserController = async (req, res, next) => {
     passport.authenticate('login', {session: false}, (err, user, info) => {
@@ -10,8 +11,11 @@ export const loginUserController = async (req, res, next) => {
             return res.status(401).json({message: info.message});
         } else {
             let token = jwt.sign({
-                email: user.email,
                 first_name: user.first_name,
+                last_name: user.last_name,
+                email: user.email,
+                age: user.age,
+                password: user.password,
                 role: user.role
             }, 
             config.COOKIE_SIGN,
@@ -21,3 +25,7 @@ export const loginUserController = async (req, res, next) => {
         }
     })(req, res, next);
 };
+
+export const getCurrentUser = (req, res) => {
+    res.send(new DTOCurrentUser(req.user))
+}

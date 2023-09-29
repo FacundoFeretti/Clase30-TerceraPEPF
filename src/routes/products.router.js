@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { getProductsController, getProductByIdController, addProductController, updateProductController, deleteProductController } from "../controllers/productController.js";
-
+import { rolesMiddlewareAdmin } from "./middlewares/roles.middleware.js";
+import passport from "passport";
+import { authorization, passportCall } from "../utils.js";
 const router = Router();
 
 
