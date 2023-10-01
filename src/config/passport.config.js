@@ -56,7 +56,6 @@ export const initializePassportLocal = () =>{
                         ...user.toObject(),
                         role: 'admin'
                     };
-                    console.log(userWithRole)
                 } else {
                     userWithRole = {
                         ...user.toObject(),

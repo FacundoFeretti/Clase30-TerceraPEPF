@@ -16,7 +16,8 @@ export const loginUserController = async (req, res, next) => {
                 email: user.email,
                 age: user.age,
                 password: user.password,
-                role: user.role
+                role: user.role,
+                cart: user.cart
             }, 
             config.COOKIE_SIGN,
             {expiresIn: '24h'}

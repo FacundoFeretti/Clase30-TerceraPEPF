@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { getProductsController, getProductByIdController, addProductController, updateProductController, deleteProductController } from "../controllers/productController.js";
-import { rolesMiddlewareAdmin } from "./middlewares/roles.middleware.js";
 import passport from "passport";
 import { authorization, passportCall } from "../utils.js";
 const router = Router();
@@ -21,12 +20,12 @@ router.post("/", async (req, res) => {
     res.send({status: 'Success', product})
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id",passportCall('jwt'), authorization('admin'), async (req, res) => {
     const result = await updateProductController(req)
     res.send({result})
 });
 
-router.delete("/:id" , async (req, res) => {
+router.delete("/:id", passportCall('jwt'), authorization('admin'), async (req, res) => {
     const result = await deleteProductController(req);
     res.send({result})
 });
