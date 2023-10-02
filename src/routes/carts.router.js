@@ -1,7 +1,10 @@
 import { Router } from "express";
 import { getCartByIdController, getCartsController, addCartController, addProductToCartController, deleteProductFromCartController, deleteAllProductsFromCartController, updateProductsFromCartController, updateProductsQuantityController } from "../controllers/cartController.js";
+import { checkCartOwner } from "./middlewares/carts.middlewares.js";
+import { passportCall } from "../utils.js";
 
 const router = Router();
+
 
 router.get("/:id", async (req, res) => {
     const cart = await getCartByIdController(req);
@@ -18,7 +21,7 @@ router.post('/', async (req, res) => {
     res.send({status: 'Cart added succesfully'})
 });
 
-router.post('/:cid/product/:pid', async (req, res) => {
+router.post('/:cid/product/:pid', passportCall('jwt'), checkCartOwner, async (req, res) => {
     const result = await addProductToCartController(req)
     res.send({result})
 });

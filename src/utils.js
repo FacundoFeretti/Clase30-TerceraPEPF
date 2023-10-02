@@ -8,7 +8,6 @@ export const passportCall = (strategy) => {
         passport.authenticate(strategy, function(err, user, info) {
             if (err) return next(err);
             if (!user) {
-                console.log('no encuentra el user')
                 return res.status(401).send({ error: info.messages ? info.messages : info.toString() });
             }
             req.user = user;
