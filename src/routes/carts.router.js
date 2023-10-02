@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
     res.send({status: 'Cart added succesfully'})
 });
 
-router.post('/:cid/product/:pid', passportCall('jwt'), checkCartOwner, async (req, res) => {
+router.post('/:cid/product/:pid/:quantity', passportCall('jwt'), checkCartOwner, async (req, res) => {
     const result = await addProductToCartController(req)
     res.send({result})
 });

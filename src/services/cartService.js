@@ -1,5 +1,5 @@
 import CartManager from "../daos/mongodb/CartMongoDAO.js";
-
+import { getProductByIdService } from "./productsService.js";
 const cartManager = new CartManager();
 
 export const getCartByIdService = async (id) => {
@@ -19,8 +19,9 @@ export const addCartService = async () => {
    return result;
 };
 
-export const addProductToCartService = async (cid, pid) => {
-    const result = await cartManager.addProductToCart(cid, pid);
+export const addProductToCartService = async (cid, pid, quantity) => {
+    const product = await getProductByIdService(pid)
+    const result = await cartManager.addProductToCart(cid, product, quantity);
     return {status: 'Product added succesfully'};
 };
 

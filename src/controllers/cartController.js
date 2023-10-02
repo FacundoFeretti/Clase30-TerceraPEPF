@@ -25,13 +25,14 @@ export const addCartController = async () => {
 export const addProductToCartController = async (req) => {
     const cartId = req.params.cid;
     const productId = req.params.pid;
+    const quantity = req.params.quantity;
     try{
         await validateMongoId(productId);
         await validateMongoId(cartId);
     } catch (error) {
         return {error: error.message}
     }
-    const result = await addProductToCartService(cartId, productId);
+    const result = await addProductToCartService(cartId, productId, quantity);
     return result;
 };
 

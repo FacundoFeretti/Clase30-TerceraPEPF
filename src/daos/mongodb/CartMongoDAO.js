@@ -23,10 +23,18 @@ export default class CartManager {
         return result
     };
 
-    addProductToCart = async (idCart, idProduct) => {
-        const product = await productDAO.getProductById(idProduct);
+    addProductToCart = async (idCart, product, quantity) => {
         const cart = await this.getCartById(idCart);
-        cart.products.push({product: product});
+        const productId = product._id.toString();
+        const productIndex = cart.products.findIndex(p => p.product._id.toString() === productId);
+        if(productIndex !== -1){
+            cart.products[productIndex].quantity += parseInt(quantity, 10);
+        } else {
+            cart.products.push({
+                product: product,
+                quantity: quantity
+            })
+        }
         await cart.save();
         return;
     };

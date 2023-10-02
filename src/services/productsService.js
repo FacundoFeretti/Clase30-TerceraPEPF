@@ -14,7 +14,7 @@ export const getProductsService = async (conditions) => {
 
 export const getProductByIdService = async (id) => {
     const product = await productDAOs.getProductById(id);
-    if(!product) return {error: 'El id no corresponde a ningun producto existente'}
+    if(!product) return {error: 'The given id does not belong to an existing product'}
     return product
 };
 
