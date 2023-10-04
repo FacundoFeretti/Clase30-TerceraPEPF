@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getCartByIdController, getCartsController, addCartController, addProductToCartController, deleteProductFromCartController, deleteAllProductsFromCartController, updateProductsFromCartController, updateProductsQuantityController } from "../controllers/cartController.js";
 import { checkCartOwner } from "./middlewares/carts.middlewares.js";
+import { createTicketController } from "../controllers/ticketsController.js";
 import { passportCall } from "../utils.js";
 
 const router = Router();
@@ -45,4 +46,9 @@ router.put('/:cid/product/:pid', async (req, res) =>{
     await updateProductsQuantityService(req.params.cid, req.params.pid, req.body.quantity)
     res.send({status: 'success'})
 });
+
+router.post('/:cid/purchase', async (req, res) => {
+    const result = await createTicketController();
+    
+})
 export default router;

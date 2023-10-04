@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import { cartModel } from "./models/carts.model.js";
-import { productDAO } from "../../server.js";
 
 export default class CartManager {
     connection = mongoose.connect('mongodb+srv://facundoferetti:35612799851230Pa@cluster0.knbbxtu.mongodb.net/?retryWrites=true&w=majority')
